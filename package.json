@@ -10,10 +10,12 @@
     "format": "biome format --write"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.5.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.563.0",
+    "maath": "^0.10.8",
     "next": "16.1.6",
     "radix-ui": "^1.4.3",
     "react": "19.2.3",
