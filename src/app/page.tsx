@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Silk from './Silk';
 
 export default function Home() {
   return (
@@ -12,6 +13,13 @@ export default function Home() {
           height={20}
           priority
         />
+          <Silk
+              speed={5}
+              scale={1}
+              color="#7B7481"
+              noiseIntensity={1.5}
+              rotation={0}
+          />
         <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
           <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
             To get started, edit the page.tsx file.
