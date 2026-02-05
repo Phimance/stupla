@@ -123,7 +123,8 @@ html, body {
 
 .glassTitle {
     font-size: 200%;
-    letter-spacing: 0.3vh;
+    color: #E2E2E2;
+    letter-spacing: 0.23vh;
     font-weight: bold;
     font-family: Arial, sans-serif;
 }

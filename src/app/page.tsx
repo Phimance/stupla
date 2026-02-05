@@ -13,7 +13,6 @@ export default function Home() {
             position: 'relative'
         }}>
 
-            {/* 2. Fix the background so it doesn't scroll away */}
             <div style={{
                 position: 'fixed',
                 inset: 0,
@@ -28,18 +27,33 @@ export default function Home() {
                     rotation={0}
                 />
             </div>
+            <center>
+                <div style={{
+                    position: 'relative',
+                    width: 380,
+                    zIndex: 2,
+                    paddingBottom: '50px'
+                }}>
+                    <div style={{
+                        position: 'relative',
+                        margin: '0 auto', // Centers the entire row
+                        zIndex: 2,
+                        paddingTop: '3vh',
+                        paddingBottom: '50px',
 
-            {/* 3. The content layer should be relative to allow normal scrolling over the silk */}
-            <div style={{
-                position: 'relative',
-                zIndex: 2,
-                paddingTop: '20vh', // Adjust spacing as needed
-                paddingBottom: '50px'
-            }}>
-                <center>
-                    <GlassContainer title={"Stundenplan"} />
-                </center>
-            </div>
+                        // Flexbox magic starts here
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center', // Centers the items in the row
+                        alignItems: 'flex-start', // Keeps them aligned at the top
+                        gap: '10px', // This provides the "slight padding" between the boxes
+                        flexWrap: 'wrap' // Ensures they stack on small mobile screens
+                    }}>
+                        <GlassContainer title={"DHGE SP"} width={220} />
+                        <GlassContainer title={"PIA23"} width={120}/>
+                    </div>
+                </div>
+            </center>
         </div>
     );
 }

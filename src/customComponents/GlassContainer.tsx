@@ -1,11 +1,11 @@
 import GlassSurface from "@/components/GlassSurface";
 import GradientText from "@/components/GradientText";
 
-const GlassContainer = ({ title = "title", desc = "description" }) => {
+const GlassContainer = ({ width = 300, fontSize = "200%", title = "title", desc = "" }) => {
 
     return (
         <GlassSurface
-            width={300}
+            width={width}
             height={"auto"}
             displace={0.5}
             distortionScale={-180}
@@ -16,18 +16,11 @@ const GlassContainer = ({ title = "title", desc = "description" }) => {
             opacity={0.93}
             mixBlendMode="screen"
         >
-            <table>
+            <table style={{width: "100%"}}>
                 <tbody>
                     <tr>
-                        <td>
-                            <GradientText
-                                colors={["#d31919","#FF9FFC","#B19EEF"]}
-                                animationSpeed={4}
-                                showBorder={false}
-                                className="glassTitle"
-                            >
-                                {title}
-                            </GradientText>
+                        <td style={{width: "100%", textAlign: "center"}}>
+                            <h1 className={"glassTitle"} style={{fontSize: fontSize}}>{title}</h1>
                         </td>
                     </tr>
                     <tr>
