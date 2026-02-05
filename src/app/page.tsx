@@ -2,6 +2,7 @@
 import Silk from '../components/Silk';
 import GlassSurface from "@/components/GlassSurface";
 import GlassContainer from "@/customComponents/GlassContainer";
+import Header from "@/app/elements/header";
 
 export default function Home() {
     return (
@@ -34,24 +35,7 @@ export default function Home() {
                     zIndex: 2,
                     paddingBottom: '50px'
                 }}>
-                    <div style={{
-                        position: 'relative',
-                        margin: '0 auto', // Centers the entire row
-                        zIndex: 2,
-                        paddingTop: '3vh',
-                        paddingBottom: '50px',
-
-                        // Flexbox magic starts here
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'center', // Centers the items in the row
-                        alignItems: 'flex-start', // Keeps them aligned at the top
-                        gap: '10px', // This provides the "slight padding" between the boxes
-                        flexWrap: 'wrap' // Ensures they stack on small mobile screens
-                    }}>
-                        <GlassContainer title={"DHGE SP"} width={220} />
-                        <GlassContainer title={"PIA23"} width={120}/>
-                    </div>
+                    <Header/>
                 </div>
             </center>
         </div>
