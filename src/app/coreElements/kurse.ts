@@ -4,7 +4,6 @@ export interface Course {
     link: string; // The actual schedule link
 }
 
-// src/app/core/kurse.ts
 export const KURSE = [
     { title: "PIA23", slug: "pia23", link: "/calendars/calendar-PIA23.ics" },
     { title: "PIB23", slug: "pib23", link: "/calendars/calendar-PIB23.ics" },
