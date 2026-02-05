@@ -2,8 +2,6 @@
 import Silk from '../components/Silk';
 import Header from "@/app/elements/header";
 import Calendar from "@/app/elements/calendar";
-import {KURSE} from "@/app/core/kurse";
-import {useSearchParams} from "next/navigation";
 import { motion } from "framer-motion";
 
 

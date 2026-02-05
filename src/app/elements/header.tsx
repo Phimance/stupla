@@ -4,7 +4,7 @@ import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import GlassTitleContainer from "@/customComponents/GlassTitleContainer";
 import GlassContainer from "@/customComponents/GlassContainer";
-import {KURSE} from "@/app/core/kurse";
+import {KURSE} from "@/app/coreElements/kurse";
 
 const Header = () => {
     const router = useRouter();
@@ -39,10 +39,10 @@ const Header = () => {
             <AnimatePresence>
                 {showPicker && (
                     <motion.div
-                        initial={{ x: -500 }}
+                        initial={{ x: -400 }}
                         animate={{ x: 0 }}
-                        exit={{ x: -400 }}
-                        transition={{ type: "spring", stiffness: 300, damping: 45 }}
+                        exit={{ x: -450 }}
+                        transition={{ type: "spring", stiffness: 600, damping: 85 }}
                     >
                         <GlassContainer width={350}>
                             <div style={{ display: 'flex', justifyContent: 'space-around', padding: '10px', color: '#E2E2E2' }}>
@@ -53,7 +53,7 @@ const Header = () => {
                                         style={{
                                             cursor: 'pointer',
                                             fontWeight: selectedKurs.slug === kurs.slug ? 'bold' : 'normal',
-                                            padding: '5px 7px'
+                                            padding: '0px 7px'
                                         }}
                                     >
                                         {kurs.title}
