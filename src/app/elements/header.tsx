@@ -1,65 +1,62 @@
 'use client';
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion'; // 1. Import these
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 import GlassTitleContainer from "@/customComponents/GlassTitleContainer";
 import GlassContainer from "@/customComponents/GlassContainer";
+import {KURSE} from "@/app/core/kurse";
 
 const Header = () => {
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
     const [showPicker, setShowPicker] = useState(false);
-    const [selectedKurs, setSelectedKurs] = useState("PIA23");
-    const kurse = ["PIA23", "PIB23", "PIC23", "WI23"];
+
+    // 1. Get the current slug from URL (?kurs=pia23)
+    const currentSlug = searchParams.get('kurs') || KURSE[0].slug;
+
+    // 2. Find the full course object based on that slug
+    const selectedKurs = KURSE.find(k => k.slug === currentSlug) || KURSE[0];
+
+    const handleSelect = (slug: string) => {
+        // 3. Update the URL without a full page reload
+        const params = new URLSearchParams(searchParams);
+        params.set('kurs', slug);
+        router.push(`${pathname}?${params.toString()}`);
+
+        setShowPicker(false);
+    };
 
     return (
-        <div style={{
-            position: 'relative',
-            margin: '0 auto',
-            zIndex: 2,
-            paddingTop: '3vh',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '10px'
-        }}>
-            {/* Top Row */}
-            <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
+        <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+            <div style={{ display: 'flex', gap: '10px' }}>
                 <GlassTitleContainer title={"DHGE SP"} width={220} />
                 <div onClick={() => setShowPicker(!showPicker)} style={{ cursor: 'pointer' }}>
-                    <GlassTitleContainer title={selectedKurs} width={120} />
+                    <GlassTitleContainer title={selectedKurs.title} width={120} />
                 </div>
             </div>
 
-            {/* 2. Wrap the conditional in AnimatePresence for the Exit animation */}
             <AnimatePresence>
                 {showPicker && (
                     <motion.div
-                        // 3. Define the animations
-                        initial={{ x: -500, opacity: 1 }}   // Comes from left
-                        animate={{ x: 0, opacity: 1 }}     // Centers
-                        exit={{ x: -500, opacity: 1 }}      // Slides to right
-                        transition={{ type: "spring", stiffness: 300, damping: 40 }}
-                        style={{ marginTop: '5px' }}
+                        initial={{ x: -500 }}
+                        animate={{ x: 0 }}
+                        exit={{ x: -400 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 45 }}
                     >
                         <GlassContainer width={350}>
-                            <div style={{
-                                display: 'flex',
-                                justifyContent: 'space-around',
-                                padding: '10px',
-                                color: '#E2E2E2'
-                            }}>
-                                {kurse.map((kurs) => (
+                            <div style={{ display: 'flex', justifyContent: 'space-around', padding: '10px', color: '#E2E2E2' }}>
+                                {KURSE.map((kurs) => (
                                     <span
-                                        key={kurs}
-                                        onClick={() => {
-                                            setSelectedKurs(kurs);
-                                            setShowPicker(false);
-                                        }}
+                                        key={kurs.slug}
+                                        onClick={() => handleSelect(kurs.slug)}
                                         style={{
                                             cursor: 'pointer',
-                                            fontWeight: selectedKurs === kurs ? 'bold' : 'normal',
-                                            padding: '5px 10px'
+                                            fontWeight: selectedKurs.slug === kurs.slug ? 'bold' : 'normal',
+                                            padding: '5px 7px'
                                         }}
                                     >
-                                        {kurs}
+                                        {kurs.title}
                                     </span>
                                 ))}
                             </div>

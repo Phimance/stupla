@@ -1,10 +1,17 @@
 'use client';
 import Silk from '../components/Silk';
-import GlassSurface from "@/components/GlassSurface";
-import GlassTitleContainer from "@/customComponents/GlassTitleContainer";
 import Header from "@/app/elements/header";
+import Calendar from "@/app/elements/calendar";
+import {KURSE} from "@/app/core/kurse";
+import {useSearchParams} from "next/navigation";
+import { motion } from "framer-motion";
+
 
 export default function Home() {
+    //kurs erhalten
+    //const currentSlug = useSearchParams().get('kurs') || KURSE[0].slug;
+    //const selectedKurs = KURSE.find(k => k.slug === currentSlug) || KURSE[0];
+
     return (
         // 1. Use minHeight and 100dvh to handle mobile browser bars correctly
         <div style={{
@@ -29,14 +36,26 @@ export default function Home() {
                 />
             </div>
             <center>
-                <div style={{
+                <motion.div style={{
                     position: 'relative',
+                    paddingTop: '3vh',
                     width: 380,
                     zIndex: 2,
-                    paddingBottom: '50px'
+                    paddingBottom: '50px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '10px'
                 }}>
                     <Header/>
-                </div>
+                    <motion.div
+                        layout
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                        style={{ width: '100%' }}
+                    >
+                        <Calendar />
+                    </motion.div>
+                </motion.div>
             </center>
         </div>
     );
