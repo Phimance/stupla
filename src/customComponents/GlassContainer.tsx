@@ -1,8 +1,13 @@
+import { ReactNode } from "react"; // 1. Import ReactNode
 import GlassSurface from "@/components/GlassSurface";
-import GradientText from "@/components/GradientText";
 
-const GlassContainer = ({ width = 300, fontSize = "200%", title = "title", desc = "" }) => {
+// 2. Define the interface for your props
+interface GlassContainerProps {
+    width?: number;
+    children?: ReactNode; // ReactNode covers strings, elements, arrays, etc.
+}
 
+const GlassContainer = ({ width = 300, children }: GlassContainerProps) => {
     return (
         <GlassSurface
             width={width}
@@ -16,22 +21,9 @@ const GlassContainer = ({ width = 300, fontSize = "200%", title = "title", desc 
             opacity={0.93}
             mixBlendMode="screen"
         >
-            <table style={{width: "100%"}}>
-                <tbody>
-                    <tr>
-                        <td style={{width: "100%", textAlign: "center"}}>
-                            <h1 className={"glassTitle"} style={{fontSize: fontSize}}>{title}</h1>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>{desc}</p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
+            {children}
         </GlassSurface>
     );
 }
-export default GlassContainer
+
+export default GlassContainer;

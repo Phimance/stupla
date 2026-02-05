@@ -1,7 +1,7 @@
 'use client';
 import Silk from '../components/Silk';
 import GlassSurface from "@/components/GlassSurface";
-import GlassContainer from "@/customComponents/GlassContainer";
+import GlassTitleContainer from "@/customComponents/GlassTitleContainer";
 import Header from "@/app/elements/header";
 
 export default function Home() {
