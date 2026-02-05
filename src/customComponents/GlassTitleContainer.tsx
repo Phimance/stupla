@@ -1,12 +1,12 @@
 import GlassSurface from "@/components/GlassSurface";
 import GradientText from "@/components/GradientText";
 
-const GlassTitleContainer = ({width = 300, fontSize = "200%", title = "title", desc = "" }) => {
+const GlassTitleContainer = ({width = 300, fontSize = "100%", title = "title", desc = "" }) => {
 
     return (
         <GlassSurface
             width={width}
-            height={"auto"}
+            height={60}
             displace={0.5}
             distortionScale={-180}
             redOffset={0}

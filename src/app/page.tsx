@@ -16,7 +16,9 @@ export default function Home() {
             width: '100%',
             minHeight: '100dvh',
             backgroundColor: '#000',
-            position: 'relative'
+            position: 'relative',
+            overflow: 'hidden'
+
         }}>
 
             <div style={{
