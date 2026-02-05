@@ -23,12 +23,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+      <html lang="en">
+      <meta name="theme-color" content="#000000"/>
+      <meta name="msapplication-navbutton-color" content="#000000"/>
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+      {children}
       </body>
-    </html>
+      </html>
   );
 }
