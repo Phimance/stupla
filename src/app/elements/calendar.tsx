@@ -80,8 +80,8 @@ const Calendar = () => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: '10px',
-            paddingTop: '2vh'
+            gap: '5px',
+            paddingTop: '1vh'
         }}>
             {groupedVorlesungen.length > 0 ? (
                 groupedVorlesungen.map((group, groupIndex) => (
