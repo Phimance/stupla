@@ -4,14 +4,15 @@ import GlassSurface from "@/components/GlassSurface";
 // 2. Define the interface for your props
 interface GlassContainerProps {
     width?: number;
+    height?: number;
     children?: ReactNode; // ReactNode covers strings, elements, arrays, etc.
 }
 
-const GlassContainer = ({ width = 300, children }: GlassContainerProps) => {
+const GlassContainer = ({ width = 300, height, children }: GlassContainerProps) => {
     return (
         <GlassSurface
             width={width}
-            height={"auto"}
+            height={ height ? height : "auto"}
             displace={0.5}
             distortionScale={-180}
             redOffset={0}

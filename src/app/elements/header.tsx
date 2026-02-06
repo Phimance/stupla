@@ -38,6 +38,12 @@ const Header = () => {
         const dateObj = new Date(currentDate);
         dateObj.setDate(dateObj.getDate() + offset);
 
+        while(dateObj.getDay() === 0 || dateObj.getDay() == 6)
+        {
+            if(offset > 0) dateObj.setDate(dateObj.getDate() + 1)
+            else dateObj.setDate(dateObj.getDate() - 1)
+        }
+
         const newDateStr = dateObj.toISOString().split('T')[0];
 
         params.set('date', newDateStr)
@@ -71,7 +77,7 @@ const Header = () => {
                                 exit={{ x: 450, opacity: 1 }}
                                 transition={{ type: "spring", stiffness: 200, damping: 40 }}
                             >
-                                <GlassContainer width={260}>
+                                <GlassContainer width={260} height={60}>
                                     <div style={{ display: 'flex', justifyContent: 'space-around', padding: '10px', color: '#E2E2E2' }}>
                                         {KURSE.filter((kurs) => kurs.slug !== selectedKurs.slug).map((kurs) => (
                                         <span
@@ -91,7 +97,6 @@ const Header = () => {
                                 </GlassContainer>
                             </motion.div>
                         ) : (
-                            // 2. The Info Display (Slides in from LEFT)
                             <motion.div
                                 key="info"
                                 initial={{ x: 450, opacity: 1 }}
@@ -99,21 +104,34 @@ const Header = () => {
                                 exit={{ x: 450, opacity: 1 }}
                                 transition={{ type: "spring", stiffness: 200, damping: 40 }}
                             >
-                                <GlassContainer width={260}>
-                                    <div style={{ textAlign: 'center', padding: '10px', color: '#E2E2E2' }}>
-                                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '10px' }}>
+                                <GlassContainer width={260} height={60}>
+                                    <div style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between',
+                                        height: '100%',
+                                        padding: '0 10px',
+                                        color: '#E2E2E2'
+                                    }}>
+
+                                        <div style={{ width: '40px', position: "absolute", left:"10px"}}>
                                             <SlArrowLeft
                                                 onClick={() => changeDate(-1)}
                                                 style={{ cursor: 'pointer' }}
                                             />
+                                        </div>
 
+                                        <div style={{ flex: 1, textAlign: 'center', whiteSpace: 'nowrap' }}>
                                             {weekdayShort} {currentDate}
+                                        </div>
 
+                                        <div style={{ width: '40px', position: "absolute", right:"10px"}}>
                                             <SlArrowRight
                                                 onClick={() => changeDate(1)}
                                                 style={{ cursor: 'pointer' }}
                                             />
-                                        </span>
+                                        </div>
+
                                     </div>
                                 </GlassContainer>
                             </motion.div>
@@ -122,8 +140,6 @@ const Header = () => {
                 </div>
 
             </div>
-
-            {/* The Swapping Area - Wrapped to prevent layout shifts */}
         </div>
     );
 }
