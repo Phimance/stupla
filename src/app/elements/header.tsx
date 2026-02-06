@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import GlassTitleContainer from "@/customComponents/GlassTitleContainer";
 import GlassContainer from "@/customComponents/GlassContainer";
 import { KURSE } from "@/app/coreElements/kurse";
+import { SlArrowLeft,SlArrowRight } from "react-icons/sl";
 
 const Header = () => {
     const router = useRouter();
@@ -18,6 +19,9 @@ const Header = () => {
 
     // Default to today if no date is in URL
     const currentDate = searchParams.get('date') || new Date().toLocaleDateString('de-DE');
+    const weekdayShort = new Date(searchParams.get('date') + 'T00:00:00').toLocaleDateString('de-DE', { weekday: 'short' })
+        .replace('.', '')
+        .toUpperCase();
 
     const handleSelect = (slug: string) => {
         const params = new URLSearchParams(searchParams);
@@ -28,7 +32,19 @@ const Header = () => {
         router.push(`${pathname}?${params.toString()}`);
         setShowPicker(false);
     };
+    const changeDate = (offset: number) => {
+        const params = new URLSearchParams(searchParams);
 
+        const dateObj = new Date(currentDate);
+        dateObj.setDate(dateObj.getDate() + offset);
+
+        const newDateStr = dateObj.toISOString().split('T')[0];
+
+        params.set('date', newDateStr)
+        if (searchParams.get('kurs')) params.set('kurs', searchParams.get('kurs')!);
+
+        router.push(`${pathname}?${params.toString()}`);
+    };
 
     return (
         <div style={{
@@ -58,16 +74,16 @@ const Header = () => {
                                 <GlassContainer width={260}>
                                     <div style={{ display: 'flex', justifyContent: 'space-around', padding: '10px', color: '#E2E2E2' }}>
                                         {KURSE.filter((kurs) => kurs.slug !== selectedKurs.slug).map((kurs) => (
-                                            <span
-                                                key={kurs.slug}
-                                                onClick={() => handleSelect(kurs.slug)}
-                                                style={{
-                                                    cursor: 'pointer',
-                                                    fontWeight: selectedKurs.slug === kurs.slug ? 'bold' : 'normal',
-                                                    marginLeft: "3px",
-                                                    marginRight: "3px"
-                                                }}
-                                            >
+                                        <span
+                                            key={kurs.slug}
+                                            onClick={() => handleSelect(kurs.slug)}
+                                            style={{
+                                                cursor: 'pointer',
+                                                fontWeight: selectedKurs.slug === kurs.slug ? 'bold' : 'normal',
+                                                marginLeft: "3px",
+                                                marginRight: "3px"
+                                            }}
+                                        >
                                             {kurs.title}
                                         </span>
                                         ))}
@@ -85,7 +101,19 @@ const Header = () => {
                             >
                                 <GlassContainer width={260}>
                                     <div style={{ textAlign: 'center', padding: '10px', color: '#E2E2E2' }}>
-                                        <span>Vorlesungen für <b>{currentDate}</b></span>
+                                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '10px' }}>
+                                            <SlArrowLeft
+                                                onClick={() => changeDate(-1)}
+                                                style={{ cursor: 'pointer' }}
+                                            />
+
+                                            {weekdayShort} {currentDate}
+
+                                            <SlArrowRight
+                                                onClick={() => changeDate(1)}
+                                                style={{ cursor: 'pointer' }}
+                                            />
+                                        </span>
                                     </div>
                                 </GlassContainer>
                             </motion.div>
