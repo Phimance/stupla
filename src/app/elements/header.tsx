@@ -105,7 +105,7 @@ const HeaderContent = () => {
                                         <SlArrowLeft onClick={() => changeDate(-1)} style={{ cursor: 'pointer' }} />
                                     </div>
                                     <div style={{ flex: 1, textAlign: 'center', whiteSpace: 'nowrap' }}>
-                                        {weekdayShort} {currentDate}
+                                        <b>{weekdayShort}</b> {currentDate}
                                     </div>
                                     <div style={{ width: '40px', position: "absolute", right:"10px"}}>
                                         <SlArrowRight onClick={() => changeDate(1)} style={{ cursor: 'pointer' }} />
