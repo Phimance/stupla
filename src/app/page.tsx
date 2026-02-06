@@ -55,7 +55,7 @@ export default function Home() {
                 </motion.div>
                 <div style={{
                     position: "fixed",
-                    bottom: "2vh",
+                    bottom: "6vh",
                     left: "0",
                     width: "100%",
                     zIndex: 999,
