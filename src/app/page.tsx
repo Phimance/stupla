@@ -6,10 +6,6 @@ import { motion } from "framer-motion";
 
 
 export default function Home() {
-    //kurs erhalten
-    //const currentSlug = useSearchParams().get('kurs') || KURSE[0].slug;
-    //const selectedKurs = KURSE.find(k => k.slug === currentSlug) || KURSE[0];
-
     return (
         // 1. Use minHeight and 100dvh to handle mobile browser bars correctly
         <div style={{

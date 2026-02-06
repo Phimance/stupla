@@ -1,11 +1,13 @@
 'use client';
-import { useEffect, useState, useMemo } from 'react';
+
+import { useEffect, useState, useMemo, Suspense } from 'react'; // 1. Import Suspense
 import GlassContainer from "@/customComponents/GlassContainer";
 import { getVorlesungen, Vorlesung } from "@/app/coreManager/calendarManager";
 import { useSearchParams } from "next/navigation";
 import React from "react";
 
-const Calendar = () => {
+// 2. Rename existing component to CalendarContent
+const CalendarContent = () => {
     const searchParams = useSearchParams();
     const [allVorlesungen, setAllVorlesungen] = useState<Vorlesung[]>([]);
 
@@ -22,8 +24,7 @@ const Calendar = () => {
             return v.startTime.toISOString().split('T')[0] === selectedDateStr;
         });
 
-        // 2. Group them by Title
-        // EXPLICIT TYPE HERE: Record<string, Vorlesung[]>
+        // 2. Group them by Location/Title logic
         const groups: Record<string, Vorlesung[]> = {};
 
         todaysLectures.forEach((v: Vorlesung) => {
@@ -40,7 +41,6 @@ const Calendar = () => {
 
         // 4. Sort the GROUPS based on the start time of their FIRST lecture
         groupArray.sort((groupA, groupB) => {
-            // We can safely access [0] because a group always has at least one item
             const startA = groupA[0].startTime.getTime();
             const startB = groupB[0].startTime.getTime();
 
@@ -59,20 +59,83 @@ const Calendar = () => {
         const groups: Vorlesung[][] = [];
 
         dailyVorlesungen.forEach((v: Vorlesung) => {
-            // Get the last group in our list
             const lastGroup = groups[groups.length - 1];
-
-            // Check if a group exists AND if the location matches the current lecture
             if (lastGroup && lastGroup[0].location === v.location) {
                 lastGroup.push(v);
             } else {
-                // Start a new group with the current lecture as the first item
                 groups.push([v]);
             }
         });
 
         return groups;
     }, [dailyVorlesungen]);
+
+    // RENDER LOGIC
+    if (groupedVorlesungen.length === 0) {
+        return (
+            <GlassContainer width={350}>
+                <div style={{ color: '#E2E2E2', textAlign: 'center', padding: '20px' }}>
+                    Keine Vorlesungen für diesen Tag.
+                </div>
+            </GlassContainer>
+        );
+    }
+
+    return (
+        <>
+            {groupedVorlesungen.map((group, groupIndex) => (
+                <GlassContainer key={groupIndex} width={350}>
+                    <table style={{
+                        color: '#E2E2E2',
+                        width: "90%",
+                        margin: "0 auto",
+                        borderCollapse: "collapse"
+                    }}>
+                        <tbody>
+                        {group.map((v, i) => (
+                            <React.Fragment key={v.id}>
+                                <tr>
+                                    <td style={{ width: "70%", paddingBottom: "4px", paddingTop: i > 0 ? "10px" : "0" }}>
+                                        <div style={{ fontSize: '0.9rem', opacity: 0.8 }}>
+                                            {v.startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - {v.endTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                        </div>
+                                    </td>
+                                    <td style={{ width: "30%", maxWidth: 0, textAlign: "left", paddingBottom: "4px", paddingTop: i > 0 ? "10px" : "0" }}>
+                                        <div style={{
+                                            fontSize: '0.9rem',
+                                            whiteSpace: 'nowrap',
+                                            overflow: 'hidden',
+                                            textOverflow: 'ellipsis'
+                                        }}>
+                                            {v.location}
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style={{ width: "70%", paddingBottom: i < group.length - 1 ? "10px" : "0" }}>
+                                        <h3 style={{ margin: 0, fontSize: '1rem', lineHeight: '1.2' }}>
+                                            {v.title.split("-").slice(1).join("-").replaceAll('"', '').trim()}
+                                        </h3>
+                                    </td>
+                                    <td style={{ width: "30%", textAlign: "left", verticalAlign: "top", paddingBottom: i < group.length - 1 ? "10px" : "0" }}>
+                                        <div style={{ fontSize: '0.9rem', opacity: 0.8 }}>
+                                            {v.lecturer.split(" ").slice(-1)}
+                                        </div>
+                                    </td>
+                                </tr>
+                            </React.Fragment>
+                        ))}
+                        </tbody>
+                    </table>
+                </GlassContainer>
+            ))}
+        </>
+    );
+};
+
+// 3. Create the Main Wrapper Component
+const Calendar = () => {
     return (
         <div style={{
             position: 'relative',
@@ -83,61 +146,16 @@ const Calendar = () => {
             gap: '5px',
             paddingTop: '1vh'
         }}>
-            {groupedVorlesungen.length > 0 ? (
-                groupedVorlesungen.map((group, groupIndex) => (
-                    <GlassContainer key={groupIndex} width={350}>
-                        <table style={{
-                            color: '#E2E2E2',
-                            width: "90%",
-                            margin: "0 auto",
-                            borderCollapse: "collapse"
-                        }}>
-                            <tbody>
-                            {group.map((v, i) => (
-                                <React.Fragment key={v.id}>
-                                    <tr>
-                                        <td style={{ width: "70%", paddingBottom: "4px", paddingTop: i > 0 ? "10px" : "0" }}>
-                                            <div style={{ fontSize: '0.9rem', opacity: 0.8 }}>
-                                                {v.startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - {v.endTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                            </div>
-                                        </td>
-                                        <td style={{ width: "30%", maxWidth: 0, textAlign: "left", paddingBottom: "4px", paddingTop: i > 0 ? "10px" : "0" }}>
-                                            <div style={{
-                                                fontSize: '0.9rem',
-                                                whiteSpace: 'nowrap',
-                                                overflow: 'hidden',
-                                                textOverflow: 'ellipsis'
-                                            }}>
-                                                {v.location}
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td style={{ width: "70%", paddingBottom: i < group.length - 1 ? "10px" : "0" }}>
-                                            <h3 style={{ margin: 0, fontSize: '1rem', lineHeight: '1.2' }}>
-                                                {v.title.split("-").slice(1).join("-").replaceAll('"', '').trim()}
-                                            </h3>
-                                        </td>
-                                        <td style={{ width: "30%", textAlign: "left", verticalAlign: "top", paddingBottom: i < group.length - 1 ? "10px" : "0" }}>
-                                            <div style={{ fontSize: '0.9rem', opacity: 0.8 }}>
-                                                {v.lecturer.split(" ").slice(-1)}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </React.Fragment>
-                            ))}
-                            </tbody>
-                        </table>
-                    </GlassContainer>
-                ))
-            ) : (
+            {/* The fallback renders a "Loading" GlassContainer while URL params are read */}
+            <Suspense fallback={
                 <GlassContainer width={350}>
                     <div style={{ color: '#E2E2E2', textAlign: 'center', padding: '20px' }}>
-                        Keine Vorlesungen für diesen Tag.
+                        Lade Vorlesungen...
                     </div>
                 </GlassContainer>
-            )}
+            }>
+                <CalendarContent />
+            </Suspense>
         </div>
     );
 };

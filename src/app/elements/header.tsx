@@ -1,13 +1,16 @@
 'use client';
-import { useState } from 'react';
+
+import { useState, Suspense } from 'react'; // 1. Import Suspense
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import GlassTitleContainer from "@/customComponents/GlassTitleContainer";
 import GlassContainer from "@/customComponents/GlassContainer";
 import { KURSE } from "@/app/coreElements/kurse";
-import { SlArrowLeft,SlArrowRight } from "react-icons/sl";
+import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 
-const Header = () => {
+// 2. Rename your existing component to 'HeaderContent'
+// This component contains the logic that relies on the URL
+const HeaderContent = () => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -26,60 +29,45 @@ const Header = () => {
     const handleSelect = (slug: string) => {
         const params = new URLSearchParams(searchParams);
         params.set('kurs', slug);
-        // Preserve the date when switching courses
         if (searchParams.get('date')) params.set('date', searchParams.get('date')!);
-
         router.push(`${pathname}?${params.toString()}`);
         setShowPicker(false);
     };
+
     const changeDate = (offset: number) => {
         const params = new URLSearchParams(searchParams);
-
         const dateObj = new Date(currentDate);
         dateObj.setDate(dateObj.getDate() + offset);
 
-        while(dateObj.getDay() === 0 || dateObj.getDay() == 6)
-        {
+        while(dateObj.getDay() === 0 || dateObj.getDay() == 6) {
             if(offset > 0) dateObj.setDate(dateObj.getDate() + 1)
             else dateObj.setDate(dateObj.getDate() - 1)
         }
 
         const newDateStr = dateObj.toISOString().split('T')[0];
-
         params.set('date', newDateStr)
         if (searchParams.get('kurs')) params.set('kurs', searchParams.get('kurs')!);
-
         router.push(`${pathname}?${params.toString()}`);
     };
 
     return (
-        <div style={{
-            position: 'relative',
-            zIndex: 10,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '10px',
-        }}>
-            {/* Top Bar */}
-            <div style={{ display: 'flex', gap: '10px' }}>
-                <div onClick={() => setShowPicker(!showPicker)} style={{ cursor: 'pointer' }}>
-                    <GlassTitleContainer title={selectedKurs.title} width={80} />
-                </div>
-                <div style={{ width: 260, height: 'auto', position: 'relative' }}>
-                    <AnimatePresence mode="popLayout" initial={false}>
-                        {showPicker ? (
-                            // 1. The Picker (Slides in from RIGHT)
-                            <motion.div
-                                key="picker"
-                                initial={{ x: 450, opacity: 1 }}
-                                animate={{ x: 0, opacity: 1 }}
-                                exit={{ x: 450, opacity: 1 }}
-                                transition={{ type: "spring", stiffness: 200, damping: 40 }}
-                            >
-                                <GlassContainer width={260} height={60}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-around', padding: '10px', color: '#E2E2E2' }}>
-                                        {KURSE.filter((kurs) => kurs.slug !== selectedKurs.slug).map((kurs) => (
+        <div style={{ display: 'flex', gap: '10px' }}>
+            <div onClick={() => setShowPicker(!showPicker)} style={{ cursor: 'pointer' }}>
+                <GlassTitleContainer title={selectedKurs.title} width={80} />
+            </div>
+            <div style={{ width: 260, height: 'auto', position: 'relative' }}>
+                <AnimatePresence mode="popLayout" initial={false}>
+                    {showPicker ? (
+                        <motion.div
+                            key="picker"
+                            initial={{ x: 450, opacity: 1 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            exit={{ x: 450, opacity: 1 }}
+                            transition={{ type: "spring", stiffness: 200, damping: 40 }}
+                        >
+                            <GlassContainer width={260} height={60}>
+                                <div style={{ display: 'flex', justifyContent: 'space-around', padding: '10px', color: '#E2E2E2' }}>
+                                    {KURSE.filter((kurs) => kurs.slug !== selectedKurs.slug).map((kurs) => (
                                         <span
                                             key={kurs.slug}
                                             onClick={() => handleSelect(kurs.slug)}
@@ -92,52 +80,61 @@ const Header = () => {
                                         >
                                             {kurs.title}
                                         </span>
-                                        ))}
+                                    ))}
+                                </div>
+                            </GlassContainer>
+                        </motion.div>
+                    ) : (
+                        <motion.div
+                            key="info"
+                            initial={{ x: 450, opacity: 1 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            exit={{ x: 450, opacity: 1 }}
+                            transition={{ type: "spring", stiffness: 200, damping: 40 }}
+                        >
+                            <GlassContainer width={260} height={60}>
+                                <div style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                    height: '100%',
+                                    padding: '0 10px',
+                                    color: '#E2E2E2'
+                                }}>
+                                    <div style={{ width: '40px', position: "absolute", left:"10px"}}>
+                                        <SlArrowLeft onClick={() => changeDate(-1)} style={{ cursor: 'pointer' }} />
                                     </div>
-                                </GlassContainer>
-                            </motion.div>
-                        ) : (
-                            <motion.div
-                                key="info"
-                                initial={{ x: 450, opacity: 1 }}
-                                animate={{ x: 0, opacity: 1 }}
-                                exit={{ x: 450, opacity: 1 }}
-                                transition={{ type: "spring", stiffness: 200, damping: 40 }}
-                            >
-                                <GlassContainer width={260} height={60}>
-                                    <div style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'space-between',
-                                        height: '100%',
-                                        padding: '0 10px',
-                                        color: '#E2E2E2'
-                                    }}>
-
-                                        <div style={{ width: '40px', position: "absolute", left:"10px"}}>
-                                            <SlArrowLeft
-                                                onClick={() => changeDate(-1)}
-                                                style={{ cursor: 'pointer' }}
-                                            />
-                                        </div>
-
-                                        <div style={{ flex: 1, textAlign: 'center', whiteSpace: 'nowrap' }}>
-                                            {weekdayShort} {currentDate}
-                                        </div>
-                                        <div style={{ width: '40px', position: "absolute", right:"10px"}}>
-                                            <SlArrowRight
-                                                onClick={() => changeDate(1)}
-                                                style={{ cursor: 'pointer' }}
-                                            />
-                                        </div>
-
+                                    <div style={{ flex: 1, textAlign: 'center', whiteSpace: 'nowrap' }}>
+                                        {weekdayShort} {currentDate}
                                     </div>
-                                </GlassContainer>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                </div>
+                                    <div style={{ width: '40px', position: "absolute", right:"10px"}}>
+                                        <SlArrowRight onClick={() => changeDate(1)} style={{ cursor: 'pointer' }} />
+                                    </div>
+                                </div>
+                            </GlassContainer>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </div>
+        </div>
+    );
+}
+
+// 3. Create the Main Wrapper Component
+const Header = () => {
+    return (
+        <div style={{
+            position: 'relative',
+            zIndex: 10,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '10px',
+        }}>
+            {/* The fallback renders while the URL is being read */}
+            <Suspense fallback={<div style={{ height: '60px', width: '350px' }} />}>
+                <HeaderContent />
+            </Suspense>
         </div>
     );
 }
