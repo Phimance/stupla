@@ -8,9 +8,9 @@ import GlassContainer from "@/customComponents/GlassContainer";
 import { KURSE } from "@/app/coreElements/kurse";
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 
-// 2. Rename your existing component to 'HeaderContent'
+// 2. Rename your existing component to 'FooterContent'
 // This component contains the logic that relies on the URL
-const HeaderContent = () => {
+const FooterContent = () => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -51,44 +51,31 @@ const HeaderContent = () => {
     };
 
     return (
-        <div style={{ display: 'flex', gap: '10px' }}>
-            <div onClick={() => setShowPicker(!showPicker)} style={{ cursor: 'pointer' }}>
-                <GlassTitleContainer title={selectedKurs.title} width={90} />
+        <GlassContainer width={380} height={60}>
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                height: '100%',
+                padding: '0 10px',
+                color: '#E2E2E2'
+            }}>
+                <div onClick={() => changeDate(-1)} style={{cursor: 'pointer', width: '80px', height: "100%", alignContent:"center", position: "absolute", left: "10px"}}>
+                    <SlArrowLeft/>
+                </div>
+                <div style={{flex: 1, textAlign: 'center', whiteSpace: 'nowrap'}}>
+                    <b>{weekdayShort}</b> {currentDate}
+                </div>
+                <div onClick={() => changeDate(1)} style={{cursor: 'pointer',width: '80px', height: "100%", alignContent:"center", position: "absolute", right: "10px"}}>
+                    <SlArrowRight/>
+                </div>
             </div>
-            <div style={{ width: 280, height: 'auto', position: 'relative' }}>
-                <motion.div
-                    key="picker"
-                    initial={{ x: 450, opacity: 1 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    exit={{ x: 450, opacity: 1 }}
-                    transition={{ type: "spring", stiffness: 200, damping: 40 }}
-                >
-                    <GlassContainer width={280} height={60}>
-                        <div style={{ display: 'flex', justifyContent: 'space-around', padding: '10px', color: '#E2E2E2' }}>
-                            {KURSE.filter((kurs) => kurs.slug !== selectedKurs.slug).map((kurs) => (
-                                <span
-                                    key={kurs.slug}
-                                    onClick={() => handleSelect(kurs.slug)}
-                                    style={{
-                                        cursor: 'pointer',
-                                        fontWeight: selectedKurs.slug === kurs.slug ? 'bold' : 'normal',
-                                        marginLeft: "3px",
-                                        marginRight: "3px"
-                                    }}
-                                >
-                                    {kurs.title}
-                                </span>
-                            ))}
-                        </div>
-                    </GlassContainer>
-                </motion.div>
-            </div>
-        </div>
+        </GlassContainer>
     );
 }
 
 // 3. Create the Main Wrapper Component
-const Header = () => {
+const Footer = () => {
     return (
         <div style={{
             position: 'relative',
@@ -99,11 +86,11 @@ const Header = () => {
             gap: '10px',
         }}>
             {/* The fallback renders while the URL is being read */}
-            <Suspense fallback={<div style={{ height: '60px', width: '350px' }} />}>
-                <HeaderContent />
+            <Suspense fallback={<div style={{height: '60px', width: '350px'}}/>}>
+                <FooterContent/>
             </Suspense>
         </div>
     );
 }
 
-export default Header;
+export default Footer;

@@ -130,6 +130,7 @@ const CalendarContent = () => {
                     </table>
                 </GlassContainer>
             ))}
+            <div style={{height: "20vh"}}></div>
         </>
     );
 };

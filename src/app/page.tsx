@@ -3,6 +3,7 @@ import Silk from '../components/Silk';
 import Header from "@/app/elements/header";
 import Calendar from "@/app/elements/calendar";
 import { motion } from "framer-motion";
+import Footer from "@/app/elements/footer";
 
 
 export default function Home() {
@@ -52,6 +53,20 @@ export default function Home() {
                         <Calendar />
                     </motion.div>
                 </motion.div>
+                <div style={{
+                    position: "fixed",
+                    bottom: "2vh",
+                    left: "0",
+                    width: "100%",
+                    zIndex: 999,
+                    display: "flex",
+                    justifyContent: "center",
+                    pointerEvents: "none"
+                }}>
+                    <div style={{pointerEvents: "auto"}}> {/* Re-enable clicks for the actual footer */}
+                        <Footer/>
+                    </div>
+                </div>
             </center>
         </div>
     );
