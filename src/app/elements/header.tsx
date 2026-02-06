@@ -18,8 +18,8 @@ const Header = () => {
     const selectedKurs = KURSE.find(k => k.slug === currentSlug) || KURSE[0];
 
     // Default to today if no date is in URL
-    const currentDate = searchParams.get('date') || new Date().toLocaleDateString('de-DE');
-    const weekdayShort = new Date(searchParams.get('date') + 'T00:00:00').toLocaleDateString('de-DE', { weekday: 'short' })
+    const currentDate = searchParams.get('date') || new Date().toISOString().split('T')[0];
+    const weekdayShort = new Date(currentDate + 'T00:00:00').toLocaleDateString('de-DE', { weekday: 'short' })
         .replace('.', '')
         .toUpperCase();
 
@@ -124,7 +124,6 @@ const Header = () => {
                                         <div style={{ flex: 1, textAlign: 'center', whiteSpace: 'nowrap' }}>
                                             {weekdayShort} {currentDate}
                                         </div>
-
                                         <div style={{ width: '40px', position: "absolute", right:"10px"}}>
                                             <SlArrowRight
                                                 onClick={() => changeDate(1)}
@@ -138,7 +137,6 @@ const Header = () => {
                         )}
                     </AnimatePresence>
                 </div>
-
             </div>
         </div>
     );

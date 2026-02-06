@@ -54,7 +54,7 @@ const Calendar = () => {
                             </tr>
                             <tr>
                                 <td style={{ width: "70%" }}>
-                                    <h3 style={{ margin: 0, fontSize: '1.1rem', lineHeight: '1.2' }}>{v.title}</h3>
+                                    <h3 style={{ margin: 0, fontSize: '1rem', lineHeight: '1.2' }}>{v.title.split("-").slice(1).join("-").replaceAll('"', '').trim()}</h3>
                                 </td>
                                 <td style={{ width: "30%", textAlign: "left", verticalAlign: "top" }}>
                                     <div style={{ fontSize: '0.9rem', opacity: 0.8 }}>{v.lecturer}</div>
