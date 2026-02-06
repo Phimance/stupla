@@ -16,17 +16,42 @@ const Calendar = () => {
     }, [currentSlug]);
 
     const dailyVorlesungen = useMemo(() => {
-        return allVorlesungen.filter(v => {
-            const lectureDate = v.startTime.toISOString().split('T')[0];
-            return lectureDate === selectedDateStr;
-        }).sort((a, b) => {
-            const titleDiff = a.title.localeCompare(b.title);
-
-            if (titleDiff !== 0) {
-                return titleDiff;
-            }
-            return a.startTime.getTime() - b.startTime.getTime();
+        // 1. Filter for today's lectures
+        const todaysLectures = allVorlesungen.filter((v: Vorlesung) => {
+            return v.startTime.toISOString().split('T')[0] === selectedDateStr;
         });
+
+        // 2. Group them by Title
+        // EXPLICIT TYPE HERE: Record<string, Vorlesung[]>
+        const groups: Record<string, Vorlesung[]> = {};
+
+        todaysLectures.forEach((v: Vorlesung) => {
+            if (!groups[v.location]) {
+                groups[v.location] = [];
+            }
+            groups[v.location].push(v);
+        });
+
+        // 3. Sort the lectures INSIDE each group by time
+        const groupArray = Object.values(groups).map((group) => {
+            return group.sort((a, b) => a.startTime.getTime() - b.startTime.getTime());
+        });
+
+        // 4. Sort the GROUPS based on the start time of their FIRST lecture
+        groupArray.sort((groupA, groupB) => {
+            // We can safely access [0] because a group always has at least one item
+            const startA = groupA[0].startTime.getTime();
+            const startB = groupB[0].startTime.getTime();
+
+            const timeDiff = startA - startB;
+
+            if (timeDiff !== 0) return timeDiff;
+            return groupA[0].title.localeCompare(groupB[0].title);
+        });
+
+        // 5. Flatten back to a single array
+        return groupArray.flat();
+
     }, [allVorlesungen, selectedDateStr]);
 
     return (
@@ -55,16 +80,28 @@ const Calendar = () => {
                                         {v.startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - {v.endTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                     </div>
                                 </td>
-                                <td style={{ width: "30%", textAlign: "left", paddingBottom: "4px" }}>
-                                    <div style={{ fontSize: '0.9rem' }}>{v.location}</div>
+
+                                {/* Added maxWidth: 0 here to force the column to stay rigid */}
+                                <td style={{ width: "30%", maxWidth: 0, textAlign: "left", paddingBottom: "4px" }}>
+                                    <div style={{
+                                        fontSize: '0.9rem',
+                                        whiteSpace: 'nowrap',
+                                        overflow: 'hidden',
+                                    }}>
+                                        {v.location}
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td style={{ width: "70%" }}>
-                                    <h3 style={{ margin: 0, fontSize: '1rem', lineHeight: '1.2' }}>{v.title.split("-").slice(1).join("-").replaceAll('"', '').trim()}</h3>
+                                    <h3 style={{ margin: 0, fontSize: '1rem', lineHeight: '1.2' }}>
+                                        {v.title.split("-").slice(1).join("-").replaceAll('"', '').trim()}
+                                    </h3>
                                 </td>
                                 <td style={{ width: "30%", textAlign: "left", verticalAlign: "top" }}>
-                                    <div style={{ fontSize: '0.9rem', opacity: 0.8 }}>{v.lecturer}</div>
+                                    <div style={{ fontSize: '0.9rem', opacity: 0.8 }}>
+                                        {v.lecturer.split(" ").slice(-1)}
+                                    </div>
                                 </td>
                             </tr>
                             </tbody>
