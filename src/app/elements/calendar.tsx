@@ -19,6 +19,20 @@ const Calendar = () => {
         return allVorlesungen.filter(v => {
             const lectureDate = v.startTime.toISOString().split('T')[0];
             return lectureDate === selectedDateStr;
+        }).sort((a, b) => {
+            // 1. Primary Sort: Compare Titles Alphabetically
+            // This puts "CloudComputing3" before "prakt.IT-System"
+            const titleDiff = a.title.localeCompare(b.title);
+
+            // If titles are different, use the title order
+            if (titleDiff !== 0) {
+                return titleDiff;
+            }
+
+            // 2. Secondary Sort: Compare Start Times
+            // If the titles are the same (e.g., both are CloudComputing),
+            // sort them by who starts earlier (09:45 before 11:30)
+            return a.startTime.getTime() - b.startTime.getTime();
         });
     }, [allVorlesungen, selectedDateStr]);
 
