@@ -84,7 +84,7 @@ const CalendarContent = () => {
     return (
         <>
             {groupedVorlesungen.map((group, groupIndex) => (
-                <GlassContainer key={groupIndex} width={350}>
+                <GlassContainer key={groupIndex} width={380}>
                     <table style={{
                         color: '#E2E2E2',
                         width: "90%",
