@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "StuPla",
-  description: "DHGE Stundenplan PI23-PI24",
+  description: "DHGE Stundenplan PI23-DM23",
 };
 
 export default function RootLayout({

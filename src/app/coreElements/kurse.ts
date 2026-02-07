@@ -9,7 +9,5 @@ export const KURSE = [
     { title: "PIB23", slug: "pib23", link: "/calendars/calendar-PIB23.ics" },
     { title: "PIC23", slug: "pic23", link: "/calendars/calendar-PIC23.ics" },
     { title: "WI23", slug: "wi23", link: "/calendars/calendar-WI23.ics" },
-    { title: "PIA24", slug: "pia24", link: "/calendars/calendar-PIA24.ics" },
-    { title: "PIB24", slug: "pib24", link: "/calendars/calendar-PIB24.ics" },
-    { title: "DM23", slug: "dm23", link: "/calendars/calendar.ics"}
+    { title: "DM23", slug: "dm23", link: "/calendars/calendar.ics"},
 ];
