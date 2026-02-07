@@ -11,4 +11,5 @@ export const KURSE = [
     { title: "WI23", slug: "wi23", link: "/calendars/calendar-WI23.ics" },
     { title: "PIA24", slug: "pia24", link: "/calendars/calendar-PIA24.ics" },
     { title: "PIB24", slug: "pib24", link: "/calendars/calendar-PIB24.ics" },
+    { title: "DM23", slug: "dm23", link: "/calendars/calendar.ics"}
 ];

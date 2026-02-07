@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8924c33b-e96c-4e0d-8d4f-4eae5717040a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/public/calendars/calendar.ics" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/coreElements/kurse.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/coreElements/kurse.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/coreManager/calendarManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/coreManager/calendarManager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/elements/calendar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/elements/calendar.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +57,7 @@
     "js.debugger.nextJs.config.created.client": "true",
     "js.debugger.nextJs.config.created.server": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/phillipstephan/Documents/privat/stupla",
+    "last_opened_file_path": "C:/Users/phill/IdeaProjects/stupla/public/calendars",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -76,6 +80,9 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\phill\IdeaProjects\stupla\public\calendars" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\phill\IdeaProjects\stupla\public\calendars" />
       <recent name="$PROJECT_DIR$/public/assets/3d" />
@@ -121,6 +128,8 @@
       <workItem from="1770192248572" duration="6521000" />
       <workItem from="1770371296847" duration="5614000" />
       <workItem from="1770401097514" duration="2572000" />
+      <workItem from="1770410749288" duration="145000" />
+      <workItem from="1770448456645" duration="911000" />
     </task>
     <servers />
   </component>

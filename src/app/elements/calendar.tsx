@@ -114,11 +114,18 @@ const CalendarContent = () => {
 
                                 <tr>
                                     <td style={{ width: "70%", paddingBottom: i < group.length - 1 ? "10px" : "0" }}>
-                                        <h3 style={{ margin: 0, fontSize: '1rem', lineHeight: '1.2' }}>
-                                            {v.title.split("-").slice(1).join("-").replaceAll('"', '').trim()}
+                                        <h3 style={{margin: 0, fontSize: '1rem', lineHeight: '1.2'}}>
+                                            {currentSlug === 'dm23'
+                                                ? v.summary.split("//").slice(0, -1).join("-").trim()
+                                                : v.title.split("-").slice(1).join("-").replace(/"/g, '').trim()
+                                            }
                                         </h3>
                                     </td>
-                                    <td style={{ width: "30%", textAlign: "left", verticalAlign: "top", paddingBottom: i < group.length - 1 ? "10px" : "0" }}>
+                                    <td style={{
+                                        width: "30%",
+                                        textAlign: "left",
+                                        verticalAlign: "top",
+                                        paddingBottom: i < group.length - 1 ? "10px" : "0" }}>
                                         <div style={{ fontSize: '0.9rem', opacity: 0.8 }}>
                                             {v.lecturer.split(" ").slice(-1)}
                                         </div>

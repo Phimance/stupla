@@ -2,6 +2,7 @@ import ical from 'ical.js';
 import {fetchCalendarData} from "@/app/coreAPI/calendarAPI";
 
 export interface Vorlesung {
+    summary: any;
     id: string;
     title: string;
     description: string;
@@ -24,10 +25,12 @@ export const getVorlesungen = async (slug: string): Promise<Vorlesung[]> => {
             // Extracting the lecturer from the LOCATION or DESCRIPTION string
             // In your data, location looks like "B 027 PC\, Herr Grimm"
             const locationParts = item.location.split(', ');
+            const lastdesc = item.description.split(" ").splice(-1)[0]
             const room = locationParts[0] || "Unbekannt";
-            const lecturer = locationParts[1] || "Unbekannt";
+            const lecturer = locationParts[1] || lastdesc || "Unbekannt";
 
             return {
+                summary: item.summary,
                 id: item.uid,
                 title: item.summary,
                 description: item.description,
