@@ -1,7 +1,7 @@
 import GlassSurface from "@/components/GlassSurface";
 import GradientText from "@/components/GradientText";
 
-const GlassTitleContainer = ({width = 300, fontSize = "100%", title = "title", desc = "" }) => {
+const GlassTitleContainer = ({width = 300, fontSize = "1.1rem", title = "title", desc = "", borderRadius = 20 }) => {
 
     return (
         <GlassSurface
@@ -15,6 +15,7 @@ const GlassTitleContainer = ({width = 300, fontSize = "100%", title = "title", d
             brightness={50}
             opacity={0.93}
             mixBlendMode="screen"
+            borderRadius={borderRadius}
         >
             <table style={{width: "100%"}}>
                 <tbody>

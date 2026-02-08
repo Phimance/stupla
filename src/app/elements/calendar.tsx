@@ -96,13 +96,13 @@ const CalendarContent = () => {
                             <React.Fragment key={v.id}>
                                 <tr>
                                     <td style={{ width: "70%", paddingBottom: "4px", paddingTop: i > 0 ? "10px" : "0" }}>
-                                        <div style={{ fontSize: '0.9rem', opacity: 0.8 }}>
+                                        <div style={{ fontSize: '1.1rem', opacity: 0.85 }}>
                                             {v.startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - {v.endTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                         </div>
                                     </td>
                                     <td style={{ width: "30%", maxWidth: 0, textAlign: "left", paddingBottom: "4px", paddingTop: i > 0 ? "10px" : "0" }}>
                                         <div style={{
-                                            fontSize: '0.9rem',
+                                            fontSize: '1.1rem',
                                             whiteSpace: 'nowrap',
                                             overflow: 'hidden',
                                             textOverflow: 'ellipsis'
@@ -126,7 +126,7 @@ const CalendarContent = () => {
                                         textAlign: "left",
                                         verticalAlign: "top",
                                         paddingBottom: i < group.length - 1 ? "10px" : "0" }}>
-                                        <div style={{ fontSize: '0.9rem', opacity: 0.8 }}>
+                                        <div style={{ fontSize: '1rem', opacity: 0.8 }}>
                                             {v.lecturer.split(" ").slice(-1)}
                                         </div>
                                     </td>

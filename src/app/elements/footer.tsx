@@ -51,7 +51,7 @@ const FooterContent = () => {
     };
 
     return (
-        <GlassContainer width={380} height={60}>
+        <GlassContainer width={380} height={60} borderRadius={33}>
             <div style={{
                 display: 'flex',
                 alignItems: 'center',

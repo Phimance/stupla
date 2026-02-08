@@ -5,10 +5,11 @@ import GlassSurface from "@/components/GlassSurface";
 interface GlassContainerProps {
     width?: number;
     height?: number;
+    borderRadius?: number;
     children?: ReactNode; // ReactNode covers strings, elements, arrays, etc.
 }
 
-const GlassContainer = ({ width = 300, height, children }: GlassContainerProps) => {
+const GlassContainer = ({ width = 300, height, children, borderRadius = 25 }: GlassContainerProps) => {
     return (
         <GlassSurface
             width={width}
@@ -18,9 +19,10 @@ const GlassContainer = ({ width = 300, height, children }: GlassContainerProps) 
             redOffset={0}
             greenOffset={10}
             blueOffset={20}
-            brightness={50}
+            brightness={20}
             opacity={0.93}
             mixBlendMode="screen"
+            borderRadius={borderRadius}
         >
             {children}
         </GlassSurface>

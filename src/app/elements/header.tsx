@@ -53,7 +53,7 @@ const HeaderContent = () => {
     return (
         <div style={{ display: 'flex', gap: '10px' }}>
             <div onClick={() => setShowPicker(!showPicker)} style={{ cursor: 'pointer' }}>
-                <GlassTitleContainer title={selectedKurs.title} width={90} />
+                <GlassTitleContainer title={selectedKurs.title} width={90} borderRadius={33} />
             </div>
             <div style={{ width: 280, height: 'auto', position: 'relative' }}>
                 <motion.div
@@ -63,7 +63,7 @@ const HeaderContent = () => {
                     exit={{ x: 450, opacity: 1 }}
                     transition={{ type: "spring", stiffness: 200, damping: 40 }}
                 >
-                    <GlassContainer width={280} height={60}>
+                    <GlassContainer width={280} height={60} borderRadius={33}>
                         <div style={{ display: 'flex', justifyContent: 'space-around', padding: '10px', color: '#E2E2E2' }}>
                             {KURSE.filter((kurs) => kurs.slug !== selectedKurs.slug).map((kurs) => (
                                 <span
@@ -71,9 +71,10 @@ const HeaderContent = () => {
                                     onClick={() => handleSelect(kurs.slug)}
                                     style={{
                                         cursor: 'pointer',
-                                        fontWeight: selectedKurs.slug === kurs.slug ? 'bold' : 'normal',
-                                        marginLeft: "3px",
-                                        marginRight: "3px"
+                                        fontWeight: 'normal',
+                                        fontSize: '1.1rem',
+                                        marginLeft: "7px",
+                                        marginRight: "7px"
                                     }}
                                 >
                                     {kurs.title}
