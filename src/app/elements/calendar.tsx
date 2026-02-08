@@ -73,7 +73,7 @@ const CalendarContent = () => {
     // RENDER LOGIC
     if (groupedVorlesungen.length === 0) {
         return (
-            <GlassContainer width={350}>
+            <GlassContainer width={380}>
                 <div style={{ color: '#E2E2E2', textAlign: 'center', padding: '20px' }}>
                     Keine Vorlesungen für diesen Tag.
                 </div>
