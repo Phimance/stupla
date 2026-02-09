@@ -206,13 +206,17 @@ const CalendarContent = () => {
                                                                 float: 'left',
                                                                 padding: '10px',
                                                                 width: '100%',
-                                                                border: 'solid 3px #22222244',
+                                                                border: 'solid 2px #22222244',
                                                                 borderRadius: '10px',
                                                                 cursor: 'pointer',
-                                                                background: isHidden ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.05)',
-                                                                color: 'white'
+                                                                color: 'white',
+                                                                fontSize: '1rem'
                                                             }}
-                                                                    onClick={() => toggleSortOut(v.title)}
+                                                                    onClick={() => {
+                                                                        toggleRow(v.id)
+                                                                        toggleSortOut(v.title)
+                                                                    }
+                                                            }
                                                             >
                                                                 {isHidden ? "Event wieder einblenden" : "Event aussortieren"}
                                                             </button>
