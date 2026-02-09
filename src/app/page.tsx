@@ -4,9 +4,70 @@ import Header from "@/app/elements/header";
 import Calendar from "@/app/elements/calendar";
 import { motion } from "framer-motion";
 import Footer from "@/app/elements/footer";
+import LightPillar from "@/components/LightPillar";
+import {useEffect, useState} from "react";
 
-
+const backgrounds = [
+    (
+        <LightPillar
+        topColor="rgb(31,0,153)"
+        bottomColor="rgb(230,0,222)"
+        intensity={1}
+        rotationSpeed={0.4}
+        glowAmount={0.001}
+        pillarWidth={9.2}
+        pillarHeight={0.6}
+        noiseIntensity={0.2}
+        pillarRotation={0}
+        interactive={false}
+        mixBlendMode="normal"
+        quality="high"
+        />
+    ),
+    (
+        <Silk
+            speed={5}
+            scale={1}
+            color="#670C20"
+            noiseIntensity={1}
+            rotation={0}
+        />
+    )
+]
 export default function Home() {
+    const [bgIndex, setBgIndex] = useState(0);
+    const [clickCounter, setClickCounter] = useState(0);
+
+    // 2. LOAD: specific "useEffect" that only runs in the browser
+    useEffect(() => {
+        // This code is skipped on the server
+        const savedIndex = localStorage.getItem("BgIndex");
+
+        if (savedIndex) {
+            const parsed = parseInt(savedIndex, 10);
+            // Safety check: make sure it's a valid number and inside array bounds
+            if (!isNaN(parsed) && parsed >= 0 && parsed < backgrounds.length) {
+                setBgIndex(parsed);
+            }
+        }
+    }, []); // Empty array [] ensures this runs only once on mount
+
+    const handleBackgroundChange = () => {
+        const nextCount = clickCounter + 1;
+
+        if (nextCount >= 5) {
+            setClickCounter(0);
+
+            // Calculate new index
+            const nextIndex = (bgIndex + 1) % backgrounds.length;
+
+            // Save to State AND Storage
+            setBgIndex(nextIndex);
+            localStorage.setItem("BgIndex", String(nextIndex));
+        } else {
+            setClickCounter(nextCount);
+        }
+    };
     return (
         // 1. Use minHeight and 100dvh to handle mobile browser bars correctly
         <div style={{
@@ -14,8 +75,8 @@ export default function Home() {
             minHeight: '100dvh',
             backgroundColor: '#000',
             position: 'relative',
-            overflow: 'hidden'
-
+            overflow: 'hidden',
+            cursor: 'pointer',
         }}>
 
             <div style={{
@@ -24,13 +85,7 @@ export default function Home() {
                 zIndex: 1,
                 pointerEvents: 'none' // Ensures background doesn't block clicks
             }}>
-                <Silk
-                    speed={5}
-                    scale={1}
-                    color="#670C20"
-                    noiseIntensity={1}
-                    rotation={0}
-                />
+                {backgrounds[bgIndex]}
             </div>
             <center>
                 <motion.div style={{
@@ -44,7 +99,7 @@ export default function Home() {
                     alignItems: 'center',
                     gap: '10px'
                 }}>
-                    <Header/>
+                    <Header onBackgroundClick={handleBackgroundChange}/>
                     <motion.div
                         layout
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}

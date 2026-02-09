@@ -6,15 +6,18 @@ import { motion, AnimatePresence } from 'framer-motion';
 import GlassTitleContainer from "@/customComponents/GlassTitleContainer";
 import GlassContainer from "@/customComponents/GlassContainer";
 import { KURSE } from "@/app/coreElements/kurse";
-import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 
 // 2. Rename your existing component to 'HeaderContent'
 // This component contains the logic that relies on the URL
-const HeaderContent = () => {
+interface HeaderProps {
+    onBackgroundClick: () => void;
+}
+
+// 1. HeaderContent receives the prop
+const HeaderContent = ({ onBackgroundClick }: HeaderProps) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
-    const [showPicker, setShowPicker] = useState(false);
 
     // Data Logic
     const currentSlug = searchParams.get('kurs') || KURSE[0].slug;
@@ -31,28 +34,11 @@ const HeaderContent = () => {
         params.set('kurs', slug);
         if (searchParams.get('date')) params.set('date', searchParams.get('date')!);
         router.push(`${pathname}?${params.toString()}`);
-        setShowPicker(false);
-    };
-
-    const changeDate = (offset: number) => {
-        const params = new URLSearchParams(searchParams);
-        const dateObj = new Date(currentDate);
-        dateObj.setDate(dateObj.getDate() + offset);
-
-        while(dateObj.getDay() === 0 || dateObj.getDay() == 6) {
-            if(offset > 0) dateObj.setDate(dateObj.getDate() + 1)
-            else dateObj.setDate(dateObj.getDate() - 1)
-        }
-
-        const newDateStr = dateObj.toISOString().split('T')[0];
-        params.set('date', newDateStr)
-        if (searchParams.get('kurs')) params.set('kurs', searchParams.get('kurs')!);
-        router.push(`${pathname}?${params.toString()}`);
     };
 
     return (
         <div style={{ display: 'flex', gap: '10px' }}>
-            <div onClick={() => setShowPicker(!showPicker)} style={{ cursor: 'pointer' }}>
+            <div onClick={onBackgroundClick} style={{ cursor: 'pointer' }}>
                 <GlassTitleContainer title={selectedKurs.title} width={90} borderRadius={33} />
             </div>
             <div style={{ width: 280, height: 'auto', position: 'relative' }}>
@@ -89,7 +75,7 @@ const HeaderContent = () => {
 }
 
 // 3. Create the Main Wrapper Component
-const Header = () => {
+const Header = ({ onBackgroundClick }: HeaderProps) => {
     return (
         <div style={{
             position: 'relative',
@@ -99,9 +85,8 @@ const Header = () => {
             alignItems: 'center',
             gap: '10px',
         }}>
-            {/* The fallback renders while the URL is being read */}
             <Suspense fallback={<div style={{ height: '60px', width: '350px' }} />}>
-                <HeaderContent />
+                <HeaderContent onBackgroundClick={onBackgroundClick} />
             </Suspense>
         </div>
     );
