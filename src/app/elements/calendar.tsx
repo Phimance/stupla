@@ -139,12 +139,12 @@ const CalendarContent = () => {
                                                 display: (isHidden && i > 0) ? 'none': 'table-row'
                                             }}
                                         >
-                                            <td style={{ width: isHidden ? "50%" : "70%", paddingBottom: "4px", paddingTop: i > 0 ? "10px" : "0" }}>
+                                            <td style={{ width: isHidden ? "50%" : "70%", paddingBottom: isHidden? '0px':"4px", paddingTop: i > 0 ? "10px" : "0" }}>
                                                 <div style={{ fontSize: '1.1rem', opacity: 0.85 }}>
                                                     {v.startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - {v.endTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                                 </div>
                                             </td>
-                                            <td style={{ width: isHidden ? "50%" : "30%", maxWidth: 0, textAlign: "left", paddingBottom: "4px", paddingTop: i > 0 ? "10px" : "0" }}>
+                                            <td style={{ width: isHidden ? "50%" : "30%", maxWidth: 0, textAlign: "left", paddingBottom: isHidden? '0px':"4px", paddingTop: i > 0 ? "10px" : "0" }}>
                                                 <div style={{
                                                     fontSize: '1.1rem',
                                                     whiteSpace: 'nowrap',
