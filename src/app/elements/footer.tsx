@@ -8,31 +8,15 @@ import GlassContainer from "@/customComponents/GlassContainer";
 import { KURSE } from "@/app/coreElements/kurse";
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 
-// 2. Rename your existing component to 'FooterContent'
-// This component contains the logic that relies on the URL
 const FooterContent = () => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
-    const [showPicker, setShowPicker] = useState(false);
-
-    // Data Logic
-    const currentSlug = searchParams.get('kurs') || KURSE[0].slug;
-    const selectedKurs = KURSE.find(k => k.slug === currentSlug) || KURSE[0];
-
     // Default to today if no date is in URL
     const currentDate = searchParams.get('date') || new Date().toISOString().split('T')[0];
     const weekdayShort = new Date(currentDate + 'T00:00:00').toLocaleDateString('de-DE', { weekday: 'short' })
         .replace('.', '')
         .toUpperCase();
-
-    const handleSelect = (slug: string) => {
-        const params = new URLSearchParams(searchParams);
-        params.set('kurs', slug);
-        if (searchParams.get('date')) params.set('date', searchParams.get('date')!);
-        router.push(`${pathname}?${params.toString()}`);
-        setShowPicker(false);
-    };
 
     const changeDate = (offset: number) => {
         const params = new URLSearchParams(searchParams);

@@ -7,6 +7,7 @@ import Footer from "@/app/elements/footer";
 import LightPillar from "@/components/LightPillar";
 import {useEffect, useState} from "react";
 import Particles from '@/components/Particles';
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
 const backgrounds = [
     (
@@ -21,7 +22,7 @@ const backgrounds = [
     (
         <Particles
             particleColors={["#ffffff"]}
-            particleCount={600}
+            particleCount={isMobile ? 600 : 800}
             particleSpread={10}
             speed={0.2}
             particleBaseSize={70}
