@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import Footer from "@/app/elements/footer";
 import LightPillar from "@/components/LightPillar";
 import {useEffect, useState} from "react";
+import Particles from '@/components/Particles';
 
 const backgrounds = [
     (
@@ -15,6 +16,19 @@ const backgrounds = [
             color="#670C20"
             noiseIntensity={1}
             rotation={0}
+        />
+    ),
+    (
+        <Particles
+            particleColors={["#ffffff"]}
+            particleCount={600}
+            particleSpread={10}
+            speed={0.2}
+            particleBaseSize={70}
+            moveParticlesOnHover={false}
+            alphaParticles={true}
+            disableRotation={false}
+            pixelRatio={1}
         />
     ),
     (
