@@ -9,22 +9,6 @@ import {useEffect, useState} from "react";
 
 const backgrounds = [
     (
-        <LightPillar
-        topColor="rgb(31,0,153)"
-        bottomColor="rgb(230,0,222)"
-        intensity={1}
-        rotationSpeed={0.4}
-        glowAmount={0.001}
-        pillarWidth={9.2}
-        pillarHeight={0.6}
-        noiseIntensity={0.2}
-        pillarRotation={0}
-        interactive={false}
-        mixBlendMode="normal"
-        quality="high"
-        />
-    ),
-    (
         <Silk
             speed={5}
             scale={1}
@@ -32,7 +16,23 @@ const backgrounds = [
             noiseIntensity={1}
             rotation={0}
         />
-    )
+    ),
+    (
+        <LightPillar
+            topColor="rgb(31,0,153)"
+            bottomColor="rgb(230,0,222)"
+            intensity={1}
+            rotationSpeed={0.4}
+            glowAmount={0.001}
+            pillarWidth={9.2}
+            pillarHeight={0.6}
+            noiseIntensity={0.2}
+            pillarRotation={0}
+            interactive={false}
+            mixBlendMode="normal"
+            quality="high"
+        />
+    ),
 ]
 export default function Home() {
     const [bgIndex, setBgIndex] = useState(0);
