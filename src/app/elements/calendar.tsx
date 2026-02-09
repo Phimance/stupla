@@ -117,7 +117,7 @@ const CalendarContent = () => {
                 const sortedGroup = [...visibleItems, ...hiddenItems];
 
                 return (
-                    <GlassContainer key={groupIndex} width={380}>
+                    <GlassContainer key={groupIndex} width={380} borderRadius={17}>
                         <table style={{
                             color: '#E2E2E2',
                             width: "90%",
@@ -135,22 +135,23 @@ const CalendarContent = () => {
                                             onClick={() => toggleRow(v.id)}
                                             style={{
                                                 cursor: 'pointer',
-                                                opacity: isHidden ? 0.4 : 1
+                                                opacity: isHidden ? 0.4 : 1,
+                                                display: (isHidden && i > 0) ? 'none': 'table-row'
                                             }}
                                         >
-                                            <td style={{ width: "70%", paddingBottom: "4px", paddingTop: i > 0 ? "10px" : "0" }}>
+                                            <td style={{ width: isHidden ? "50%" : "70%", paddingBottom: "4px", paddingTop: i > 0 ? "10px" : "0" }}>
                                                 <div style={{ fontSize: '1.1rem', opacity: 0.85 }}>
                                                     {v.startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - {v.endTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                                 </div>
                                             </td>
-                                            <td style={{ width: "30%", maxWidth: 0, textAlign: "left", paddingBottom: "4px", paddingTop: i > 0 ? "10px" : "0" }}>
+                                            <td style={{ width: isHidden ? "50%" : "30%", maxWidth: 0, textAlign: "left", paddingBottom: "4px", paddingTop: i > 0 ? "10px" : "0" }}>
                                                 <div style={{
                                                     fontSize: '1.1rem',
                                                     whiteSpace: 'nowrap',
                                                     overflow: 'hidden',
                                                     textOverflow: 'ellipsis'
                                                 }}>
-                                                    {v.location}
+                                                    {isHidden? v.title.split("-").slice(1).join("-").replace(/"/g, '').trim() : v.location}
                                                 </div>
                                             </td>
                                         </tr>
@@ -159,7 +160,8 @@ const CalendarContent = () => {
                                             onClick={() => toggleRow(v.id)}
                                             style={{
                                                 cursor: 'pointer',
-                                                opacity: isHidden ? 0.4 : 1
+                                                opacity: isHidden ? 0.4 : 1,
+                                                display: isHidden ? 'none': 'table-row'
                                             }}
                                         >
                                             <td style={{ width: "70%", paddingBottom: i < sortedGroup.length - 1 ? "10px" : "0" }}>
@@ -168,7 +170,6 @@ const CalendarContent = () => {
                                                         ? v.summary.split("//").slice(0, -1).join("-").trim()
                                                         : v.title.split("-").slice(1).join("-").replace(/"/g, '').trim()
                                                     }
-                                                    {isHidden && <span style={{fontSize: '0.7rem', marginLeft: '6px', opacity: 0.7}}>(Hidden)</span>}
                                                 </h3>
                                             </td>
                                             <td style={{
