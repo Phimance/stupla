@@ -1,5 +1,4 @@
 import GlassSurface from "@/components/GlassSurface";
-import GradientText from "@/components/GradientText";
 
 const GlassTitleContainer = ({width = 300, fontSize = "1.1rem", title = "title", desc = "", borderRadius = 20 }) => {
 
