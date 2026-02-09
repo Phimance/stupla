@@ -45,7 +45,7 @@ const backgrounds = [
             pillarRotation={0}
             interactive={false}
             mixBlendMode="normal"
-            quality="high"
+            quality= { isMobile? "medium" : "high" }
         />
     ),
 ]
