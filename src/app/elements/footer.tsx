@@ -25,7 +25,7 @@ const FooterContent = () => {
         const dateObj = new Date(currentDate);
         dateObj.setDate(dateObj.getDate() + offset);
 
-        while(dateObj.getDay() === 0 || dateObj.getDay() == 6) {
+        while((dateObj.getDay() === 0 || (dateObj.getDay() == 6) && searchParams.get('kurs')!="dm23")) {
             if(offset > 0) dateObj.setDate(dateObj.getDate() + 1)
             else dateObj.setDate(dateObj.getDate() - 1)
         }
