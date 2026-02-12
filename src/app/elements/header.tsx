@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, Suspense } from 'react'; // 1. Import Suspense
+import { Suspense } from 'react'; // 1. Import Suspense
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import GlassTitleContainer from "@/customComponents/GlassTitleContainer";

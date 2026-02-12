@@ -12,6 +12,8 @@ const FooterContent = () => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
+    const [footerExpanded, setFooter] = useState<boolean>(false);
+
     // Default to today if no date is in URL
     const currentDate = searchParams.get('date') || new Date().toISOString().split('T')[0];
     const weekdayShort = new Date(currentDate + 'T00:00:00').toLocaleDateString('de-DE', { weekday: 'short' })
@@ -34,27 +36,70 @@ const FooterContent = () => {
         router.push(`${pathname}?${params.toString()}`);
     };
 
+    const resetToToday = () => {
+        const params = new URLSearchParams(searchParams);
+        const todayStr = new Date().toISOString().split('T')[0];
+        params.set('date', todayStr);
+        if (searchParams.get('kurs')) params.set('kurs', searchParams.get('kurs')!);
+        router.push(`${pathname}?${params.toString()}`);
+        setFooter(false);
+    };
+
+    const toggleFooter = () => {
+        setFooter(prev => !prev);
+    };
+
     return (
-        <GlassContainer width={380} height={60} borderRadius={33}>
-            <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                height: '100%',
-                padding: '0 10px',
-                color: '#E2E2E2'
-            }}>
-                <div onClick={() => changeDate(-1)} style={{cursor: 'pointer', width: '80px', height: "100%", alignContent:"center", position: "absolute", left: "10px"}}>
-                    <SlArrowLeft/>
+        <>
+            <AnimatePresence mode="wait">
+                {footerExpanded && (
+                    <motion.div
+                        initial={{ opacity: 1, x: -450 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 1, x: -450 }}
+                        transition={{ duration: 0.5, ease: "easeInOut" }}
+                    >
+                        <GlassContainer width={380} height={60} borderRadius={33}>
+                            <button
+                                onClick={resetToToday}
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    background: 'none',
+                                    border: 'none',
+                                    color: '#E2E2E2',
+                                    cursor: 'pointer',
+                                    fontSize: '1rem',
+                                    fontWeight: 'bold'
+                                }}
+                            >
+                                Zurück zu heute
+                            </button>
+                        </GlassContainer>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+            <GlassContainer width={380} height={60} borderRadius={33}>
+                <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    height: '100%',
+                    padding: '0 10px',
+                    color: '#E2E2E2'
+                }}>
+                    <div onClick={() => changeDate(-1)} style={{cursor: 'pointer', width: '80px', height: "100%", alignContent:"center", position: "absolute", left: "10px"}}>
+                        <SlArrowLeft/>
+                    </div>
+                    <div style={{flex: 1, textAlign: 'center', whiteSpace: 'nowrap'}} onClick={toggleFooter}>
+                        <b>{weekdayShort}</b> {currentDate}
+                    </div>
+                    <div onClick={() => changeDate(1)} style={{cursor: 'pointer',width: '80px', height: "100%", alignContent:"center", position: "absolute", right: "10px"}}>
+                        <SlArrowRight/>
+                    </div>
                 </div>
-                <div style={{flex: 1, textAlign: 'center', whiteSpace: 'nowrap'}}>
-                    <b>{weekdayShort}</b> {currentDate}
-                </div>
-                <div onClick={() => changeDate(1)} style={{cursor: 'pointer',width: '80px', height: "100%", alignContent:"center", position: "absolute", right: "10px"}}>
-                    <SlArrowRight/>
-                </div>
-            </div>
-        </GlassContainer>
+            </GlassContainer>
+        </>
     );
 }
 

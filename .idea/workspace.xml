@@ -4,11 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8924c33b-e96c-4e0d-8d4f-4eae5717040a" name="Changes" comment="" />
+    <list default="true" id="8924c33b-e96c-4e0d-8d4f-4eae5717040a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/elements/footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/elements/footer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/elements/header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/elements/header.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_C:/Users/phill/IdeaProjects/stupla" value="39C8fzsKE1fEgIpsmxFgPiXLvGk" />
+    </persistenceIdMap>
+  </component>
+  <component name="CopilotUserSelectedModel">
+    <selectedModels>
+      <entry key="chat-panel" value="Claude Haiku 4.5" />
+      <entry key="agent-panel" value="Claude Haiku 4.5" />
+    </selectedModels>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -51,7 +66,7 @@
     &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
     &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/phill/IdeaProjects/stupla/public/calendars&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/phill/Documents/DevOps/backend/demo&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -125,7 +140,9 @@
       <workItem from="1770410749288" duration="145000" />
       <workItem from="1770448456645" duration="1604000" />
       <workItem from="1770541562888" duration="1722000" />
-      <workItem from="1770620626846" duration="16670000" />
+      <workItem from="1770620626846" duration="17257000" />
+      <workItem from="1770881208686" duration="29000" />
+      <workItem from="1770888102116" duration="809000" />
     </task>
     <servers />
   </component>
@@ -135,5 +152,13 @@
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
   </component>
 </project>
