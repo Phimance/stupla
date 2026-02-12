@@ -57,7 +57,7 @@ const FooterContent = () => {
                         initial={{ opacity: 1, x: -450 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 1, x: -450 }}
-                        transition={{ duration: 0.5, ease: "easeInOut" }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
                     >
                         <GlassContainer width={380} height={60} borderRadius={33}>
                             <button
