@@ -77,8 +77,8 @@ const FooterContent = () => {
                     <motion.div
                         initial={{ opacity: 1, x: -450 }}
                         animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 1, x: -450 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        exit={{ opacity: 1, x: 450 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
                     >
                         <GlassContainer width={380} height={60} borderRadius={33}>
                             <button
@@ -124,26 +124,77 @@ const FooterContent = () => {
                     padding: '0 10px',
                     color: '#E2E2E2'
                 }}>
-                    <div onClick={() => changeDate(-1)} style={{
-                        cursor: 'pointer',
-                        width: '80px',
-                        height: "100%",
-                        alignContent: "center",
-                        position: "absolute",
-                        left: "10px"
-                    }}>
-                        <SlArrowLeft/>
-                    </div>
-                    <div style={{flex: 1, textAlign: 'center', whiteSpace: 'nowrap'}} onClick={toggleFooter}>
-                        <b>{weekdayShort}</b> {currentDate}
-                    </div>
-                    <div onClick={() => changeDate(1)} style={{cursor: 'pointer',width: '80px', height: "100%", alignContent:"center", position: "absolute", right: "10px"}}>
-                        <SlArrowRight/>
-                    </div>
+                    <AnimatePresence mode="wait">
+                        {!klausurenShown && (
+                            <motion.div
+                                initial={{opacity: 0}}
+                                animate={{opacity: 1}}
+                                exit={{opacity: 0}}
+                                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                            >
+                                <div style={{
+                                    height: '100%',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '5px',
+                                    marginRight: '10px'
+                                }}>
+                                    <div onClick={() => changeDate(-1)} style={{
+                                        cursor: 'pointer',
+                                        width: '80px',
+                                        height: "100%",
+                                        alignContent: "center",
+                                        position: "absolute",
+                                        left: "10px"
+                                    }}>
+                                        <SlArrowLeft/>
+                                    </div>
+                                    <div style={{flex: 1, textAlign: 'center', whiteSpace: 'nowrap'}}
+                                         onClick={toggleFooter}>
+                                        <b>{weekdayShort}</b> {currentDate}
+                                    </div>
+                                    <div onClick={() => changeDate(1)} style={{
+                                        cursor: 'pointer',
+                                        width: '80px',
+                                        height: "100%",
+                                        alignContent: "center",
+                                        position: "absolute",
+                                        right: "10px"
+                                    }}>
+                                        <SlArrowRight/>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        )}
+                        {klausurenShown && (
+                            <motion.div
+                                initial={{opacity: 0}}
+                                animate={{opacity: 1}}
+                                exit={{opacity: 0}}
+                                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                            >
+                                <div style={{
+                                    height: '100%',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '20px',
+                                    marginRight: '10px'
+                                }}>
+                                    <SlArrowLeft/>
+
+                                    <div style={{flex: 1, textAlign: 'center', whiteSpace: 'nowrap'}}
+                                         onClick={toggleKlausuren}>
+                                        <b>Zurück zu den Kursen</b>
+                                    </div>
+                                </div>
+                            </motion.div>
+                            )}
+                    </AnimatePresence>
+
                 </div>
             </GlassContainer>
         </>
-    );
+);
 }
 
 // 3. Create the Main Wrapper Component

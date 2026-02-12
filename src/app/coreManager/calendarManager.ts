@@ -46,3 +46,19 @@ export const getVorlesungen = async (slug: string): Promise<Vorlesung[]> => {
         return [];
     }
 };
+
+export const getKlausuren = (vorlesungen: Vorlesung[]): Vorlesung[] => {
+    const now = new Date();
+
+    return vorlesungen.filter((kurs) => {
+        // 1. Check if it's actually an exam
+        const isExam = kurs.description.toLowerCase().includes("klausur") ||
+            kurs.title.toLowerCase().includes("klausur");
+
+        // 2. Check if the end time (or start time) is in the future
+        // We use endTime here so that an exam currently in progress doesn't vanish instantly
+        const isFuture = new Date(kurs.endTime) >= now;
+
+        return isExam && isFuture;
+    });
+};

@@ -47,7 +47,7 @@ const HeaderContent = ({ onBackgroundClick }: HeaderProps) => {
                     initial={{ x: 450, opacity: 1 }}
                     animate={{ x: 0, opacity: 1 }}
                     exit={{ x: 450, opacity: 1 }}
-                    transition={{ type: "spring", stiffness: 200, damping: 40 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 >
                     <GlassContainer width={280} height={60} borderRadius={33}>
                         <div style={{ display: 'flex', justifyContent: 'space-around', padding: '10px', color: '#E2E2E2' }}>
