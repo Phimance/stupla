@@ -104,7 +104,6 @@ const CalendarContent = () => {
         <>
             {groupedVorlesungen.map((originalGroup, groupIndex) => {
 
-                // 1. SPLIT INTO TWO LISTS
                 const visibleItems: Vorlesung[] = [];
                 const hiddenItems: Vorlesung[] = [];
 

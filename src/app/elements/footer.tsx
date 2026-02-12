@@ -22,20 +22,30 @@ const FooterContent = () => {
 
     const changeDate = (offset: number) => {
         const params = new URLSearchParams(searchParams);
-        const dateObj = new Date(currentDate);
+        const [year, month, day] = currentDate.split('-').map(Number);
+        const dateObj = new Date(year, month - 1, day);
+
         dateObj.setDate(dateObj.getDate() + offset);
 
-        while((dateObj.getDay() === 0 || (dateObj.getDay() == 6) && searchParams.get('kurs')!="dm23")) {
-            if(offset > 0) dateObj.setDate(dateObj.getDate() + 1)
-            else dateObj.setDate(dateObj.getDate() - 1)
+        // While-Schleife muss weitermachen, bis ein gültiger Wochentag gefunden ist
+        while(dateObj.getDay() === 0 || (dateObj.getDay() === 6 && searchParams.get('kurs') !== "dm23")) {
+            if(offset > 0) {
+                dateObj.setDate(dateObj.getDate() + 1);
+            } else {
+                dateObj.setDate(dateObj.getDate() - 1);
+            }
         }
 
-        const newDateStr = dateObj.toISOString().split('T')[0];
-        params.set('date', newDateStr)
+        // Sichere Formatierung ohne Zeitzonenprobleme
+        const newDateStr = `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')}`;
+        params.set('date', newDateStr);
         if (searchParams.get('kurs')) params.set('kurs', searchParams.get('kurs')!);
         router.push(`${pathname}?${params.toString()}`);
     };
 
+    function showKlausuren() {
+
+    }
     const resetToToday = () => {
         const params = new URLSearchParams(searchParams);
         const todayStr = new Date().toISOString().split('T')[0];
@@ -63,7 +73,7 @@ const FooterContent = () => {
                             <button
                                 onClick={resetToToday}
                                 style={{
-                                    width: '100%',
+                                    width: '45%',
                                     height: '100%',
                                     background: 'none',
                                     border: 'none',
@@ -74,6 +84,21 @@ const FooterContent = () => {
                                 }}
                             >
                                 Zurück zu heute
+                            </button>
+                            <button
+                                onClick={showKlausuren}
+                                style={{
+                                    width: '45%',
+                                    height: '100%',
+                                    background: 'none',
+                                    border: 'none',
+                                    color: '#E2E2E2',
+                                    cursor: 'pointer',
+                                    fontSize: '1rem',
+                                    fontWeight: 'bold'
+                                }}
+                            >
+                                Klausuren anzeigen
                             </button>
                         </GlassContainer>
                     </motion.div>
@@ -88,7 +113,14 @@ const FooterContent = () => {
                     padding: '0 10px',
                     color: '#E2E2E2'
                 }}>
-                    <div onClick={() => changeDate(-1)} style={{cursor: 'pointer', width: '80px', height: "100%", alignContent:"center", position: "absolute", left: "10px"}}>
+                    <div onClick={() => changeDate(-1)} style={{
+                        cursor: 'pointer',
+                        width: '80px',
+                        height: "100%",
+                        alignContent: "center",
+                        position: "absolute",
+                        left: "10px"
+                    }}>
                         <SlArrowLeft/>
                     </div>
                     <div style={{flex: 1, textAlign: 'center', whiteSpace: 'nowrap'}} onClick={toggleFooter}>
