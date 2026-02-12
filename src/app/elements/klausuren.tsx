@@ -47,12 +47,24 @@ const KlausurenContent = () => {
                     }}>
                         <tbody>
                         <tr>
-                            <td style={{ width: "70%", paddingBottom: "4px" }}>
-                                <div style={{ fontSize: '1.1rem', fontWeight: '500', opacity: 0.9 }}>
-                                    {k.title}
+                            <td style={{width: "70%", paddingBottom: "4px"}}>
+                                <div style={{
+                                    fontSize: '1.1rem',
+                                    fontWeight: '500',
+                                    opacity: 0.9,
+                                    display: '-webkit-box',
+                                    WebkitLineClamp: 2,
+                                    WebkitBoxOrient: 'vertical',
+                                    overflow: 'hidden',
+                                    wordBreak: 'break-word'
+                                }}>
+                                    {currentSlug === 'dm23'
+                                        ? k.summary.split("//")[0].trim()
+                                        : k.title.split("-").slice(1).join("-").replace(/"/g, '').trim()
+                                    }
                                 </div>
                             </td>
-                            <td style={{ width: "30%", textAlign: "right", paddingBottom: "4px" }}>
+                            <td style={{width: "30%", textAlign: "right", paddingBottom: "4px"}}>
                                 <div style={{
                                     fontSize: '0.9rem',
                                     opacity: 0.7,
@@ -65,13 +77,13 @@ const KlausurenContent = () => {
                             </td>
                         </tr>
                         <tr>
-                            <td style={{ width: "70%" }}>
-                                <h3 style={{ margin: 0, fontSize: '0.9rem', fontWeight: 'normal', opacity: 0.7 }}>
+                            <td style={{width: "70%", paddingBottom: "4px"}}>
+                                <h3 style={{margin: 0, fontSize: '0.9rem', fontWeight: 'normal', opacity: 0.7}}>
                                     {k.lecturer}
                                 </h3>
                             </td>
-                            <td style={{ width: "30%", textAlign: "right" }}>
-                                <div style={{ fontSize: '0.9rem', color: '#fff' }}>
+                            <td style={{width: "30%", textAlign: "right", paddingBottom: "4px"}}>
+                                <div style={{fontSize: '0.9rem', color: '#fff'}}>
                                     {new Intl.DateTimeFormat('de-DE', {
                                         day: '2-digit',
                                         month: '2-digit',
@@ -80,11 +92,18 @@ const KlausurenContent = () => {
                                 </div>
                             </td>
                         </tr>
+                        <tr>
+                            <td style={{width: "100%"}}>
+                                <h3 style={{margin: 0, fontSize: '0.9rem', fontWeight: 'normal', opacity: 0.7}}>
+                                    {k.startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - {k.endTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                </h3>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </GlassContainer>
             ))}
-            <div style={{ height: "20vh" }}></div>
+            <div style={{height: "20vh"}}></div>
         </>
     );
 };
@@ -102,12 +121,12 @@ const Klausuren = () => {
         }}>
             <Suspense fallback={
                 <GlassContainer width={380}>
-                    <div style={{ color: '#E2E2E2', textAlign: 'center', padding: '20px' }}>
+                    <div style={{color: '#E2E2E2', textAlign: 'center', padding: '20px'}}>
                         Verarbeite Daten...
                     </div>
                 </GlassContainer>
             }>
-                <KlausurenContent />
+                <KlausurenContent/>
             </Suspense>
         </div>
     );

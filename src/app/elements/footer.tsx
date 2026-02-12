@@ -179,11 +179,12 @@ const FooterContent = () => {
                                     alignItems: 'center',
                                     gap: '20px',
                                     marginRight: '10px'
-                                }}>
+                                }}
+                                     onClick={toggleKlausuren}
+                                >
                                     <SlArrowLeft/>
 
-                                    <div style={{flex: 1, textAlign: 'center', whiteSpace: 'nowrap'}}
-                                         onClick={toggleKlausuren}>
+                                    <div style={{flex: 1, textAlign: 'center', whiteSpace: 'nowrap'}}>
                                         <b>Zurück zu den Kursen</b>
                                     </div>
                                 </div>
