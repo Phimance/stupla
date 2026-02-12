@@ -13,6 +13,7 @@ const FooterContent = () => {
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const [footerExpanded, setFooter] = useState<boolean>(false);
+    const [klausurenShown, setKlausuren] = useState<boolean>(false);
 
     // Default to today if no date is in URL
     const currentDate = searchParams.get('date') || new Date().toISOString().split('T')[0];
@@ -43,8 +44,18 @@ const FooterContent = () => {
         router.push(`${pathname}?${params.toString()}`);
     };
 
-    function showKlausuren() {
+    function toggleKlausuren() {
+        const params = new URLSearchParams(searchParams);
 
+        if (searchParams.get('klausuren') && searchParams.get('klausuren') === 'true') {
+            params.set('klausuren', 'false');
+            setKlausuren(false)
+        }else{
+            params.set('klausuren', 'true');
+            setKlausuren(true)
+        }
+        router.push(`${pathname}?${params.toString()}`)
+        setFooter(false);
     }
     const resetToToday = () => {
         const params = new URLSearchParams(searchParams);
@@ -86,7 +97,7 @@ const FooterContent = () => {
                                 Zurück zu heute
                             </button>
                             <button
-                                onClick={showKlausuren}
+                                onClick={toggleKlausuren}
                                 style={{
                                     width: '45%',
                                     height: '100%',
