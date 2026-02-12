@@ -91,7 +91,10 @@ const CalendarContent = () => {
         return (
             <GlassContainer width={380}>
                 <div style={{ color: '#E2E2E2', textAlign: 'center', padding: '20px' }}>
-                    Keine Vorlesungen für diesen Tag.
+                    {new Date(searchParams.get('date') as string).getDay() === 6 && currentSlug === 'dm23'
+                        ? " Hier glücklicherweise keine Vorlesung, Matthias :D"
+                        : "Keine Vorlesungen für diesen Tag."
+                    }
                 </div>
             </GlassContainer>
         );
