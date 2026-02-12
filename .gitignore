@@ -12,7 +12,8 @@
 
 # testing
 /coverage
-
+# Ignore all ICS files in the public directory
+public/**/*.ics
 # next.js
 /.next/
 /out/
